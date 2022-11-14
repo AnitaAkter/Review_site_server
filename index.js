@@ -85,27 +85,7 @@ async function run() {
     });
 
 
-    // update a product
-    app.put("/review/:id", async (req, res) => {
-      const id = req.params.id;
-      const updatedProduct = req.body;
-      const filter = { _id: ObjectId(id) };
-      const options = { upsert: true };
-      console.log(updatedProduct);
-      const updatedDoc = {
-        $set: {
-          name: updatedProduct.name,
-          email: updatedProduct.email,
-          details: updatedProduct.details,
-        },
-      };
-      const result = await reviewCollection.updateOne(
-        filter,
-        updatedDoc,
-        options
-      );
-      res.send(result);
-    });
+
 
     // delete a product from database 
     app.delete(`/reviews/:id`, async (req, res) => {
