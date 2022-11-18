@@ -107,3 +107,46 @@ async function run() {
       res.send(result);
     });
 
+    // delete a product from database 
+    app.delete(`/reviews/:id`, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await reviewCollection.deleteOne(query);
+      res.send(result);
+    })
+
+    // Blogs
+
+    app.get("/blogs", async (req, res) => {
+      const query = {};
+      const cursor = blogsCollection.find(query);
+      const blogs = await cursor.toArray();
+      res.send(blogs);
+    });
+
+  } finally {
+    // await client.close();
+  }
+};
+run().catch(console.dir);
+
+
+
+
+/********************************************\
+            MongoDB Connection End
+\********************************************/
+
+
+
+// Create root API
+app.get("/", (req, res) => {
+  res.send("Running Electra server");
+});
+
+// For Port & Listening
+
+app.listen(port, (req, res) => {
+  console.log("Listening to port", port);
+});
+
